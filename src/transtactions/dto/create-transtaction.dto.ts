@@ -5,6 +5,7 @@ import {
   IsInt,
   IsNotEmpty,
   IsNumber,
+  IsOptional,
   ValidateNested,
 } from 'class-validator';
 //type and rules sales content
@@ -26,6 +27,9 @@ export class CreateTranstactionDto {
   @IsNotEmpty({ message: 'The total cannot be empty' })
   @IsNumber({}, { message: 'Invalid amount' })
   total: number;
+
+  @IsOptional()
+  coupon: string;
 
   @IsArray()
   @ArrayNotEmpty({ message: 'The contents cannot be empty' })

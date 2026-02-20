@@ -13,6 +13,7 @@ import {
 import { Between, FindManyOptions, Repository } from 'typeorm';
 import { Product } from 'src/products/entities/product.entity';
 import { endOfDay, isValid, parseISO, startOfDay } from 'date-fns';
+import { CouponsService } from 'src/coupons/coupons.service';
 
 @Injectable()
 export class TranstactionsService {
@@ -23,6 +24,7 @@ export class TranstactionsService {
     private readonly transactionContentsRepository: Repository<TransactionContents>,
     @InjectRepository(Product)
     private readonly productRepository: Repository<Product>,
+    private readonly couponService: CouponsService,
   ) {}
   async create(createTranstactionDto: CreateTranstactionDto) {
     //creamos una transaccion porque si no hay inventario de algun producto, queremos que todo falle para que no siga la ejecucion del codigo
@@ -38,6 +40,17 @@ export class TranstactionsService {
           0,
         );
         transaction.total = total;
+        //para poder usar el servicio de coupon aqui , debemos importar el module de coupon en el module de transaction
+        //si hay cupon
+        if (createTranstactionDto.coupon) {
+          const coupon = await this.couponService.applyCoupon(
+            createTranstactionDto.coupon,
+          );
+          const discount = (coupon.porcentage / 100) * total;
+          transaction.discount = discount;
+          transaction.coupon = coupon.name;
+          transaction.total -= discount;
+        }
         // await this.transactionRepository.save(transaction);
         for (const contents of createTranstactionDto.contents) {
           //find product across entityManager

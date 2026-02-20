@@ -7,6 +7,7 @@ import { CategoriesModule } from './categories/categories.module';
 import { typeOrmConfig } from './config/typeorm.config';
 import { ProductsModule } from './products/products.module';
 import { TranstactionsModule } from './transtactions/transtactions.module';
+import { CouponsModule } from './coupons/coupons.module';
 
 @Module({
   controllers: [AppController],
@@ -24,6 +25,7 @@ import { TranstactionsModule } from './transtactions/transtactions.module';
     CategoriesModule,
     ProductsModule,
     TranstactionsModule,
+    CouponsModule,
   ],
 })
 export class AppModule {}
