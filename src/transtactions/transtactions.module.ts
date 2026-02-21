@@ -6,8 +6,8 @@ import {
   TransactionContents,
   Transtaction,
 } from './entities/transtaction.entity';
-import { Product } from 'src/products/entities/product.entity';
-import { CouponsModule } from 'src/coupons/coupons.module';
+import { Product } from '../products/entities/product.entity';
+import { CouponsModule } from '../coupons/coupons.module';
 
 @Module({
   imports: [

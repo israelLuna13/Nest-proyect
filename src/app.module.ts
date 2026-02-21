@@ -13,15 +13,16 @@ import { CouponsModule } from './coupons/coupons.module';
   controllers: [AppController],
   providers: [AppService],
   imports: [
-    //configuracion variables de entorno
-    //config module disponible en toda la app
+    //global enviroment  configuration
     ConfigModule.forRoot({ isGlobal: true }),
+    //Database connection using async env-based configuration
     TypeOrmModule.forRootAsync({
       //config databse con env
       useFactory: typeOrmConfig,
       //permite usar process.env via ConfigService
       inject: [ConfigService],
     }),
+    //Application feature modules
     CategoriesModule,
     ProductsModule,
     TranstactionsModule,

@@ -10,7 +10,7 @@ import {
 import { TranstactionsService } from './transtactions.service';
 import { CreateTranstactionDto } from './dto/create-transtaction.dto';
 // import { UpdateTranstactionDto } from './dto/update-transtaction.dto';
-import { IdValidationPipe } from 'src/common/pipes/id-validation/id-validation.pipe';
+import { IdValidationPipe } from '../common/pipes/id-validation/id-validation.pipe';
 
 @Controller('transtactions')
 export class TranstactionsController {
