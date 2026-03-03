@@ -88,7 +88,7 @@ export class TranstactionsService {
         }
       },
     );
-    return 'Stocked sale';
+    return { message: 'Stocked sale' };
   }
 
   findAll(transactionDate?: string) {

@@ -31,9 +31,15 @@ export class CategoriesService {
     };
 
     if (products === 'true') {
-      options.relations = {
+      // eslint-disable-next-line @typescript-eslint/no-unused-expressions
+      ((options.relations = {
         products: true,
-      };
+      }),
+        (options.order = {
+          products: {
+            name: 'DESC',
+          },
+        }));
     }
     const category = await this.categoryRepository.findOne(options);
     if (!category) {
