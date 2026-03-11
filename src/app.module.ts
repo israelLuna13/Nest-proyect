@@ -8,6 +8,7 @@ import { typeOrmConfig } from './config/typeorm.config';
 import { ProductsModule } from './products/products.module';
 import { TranstactionsModule } from './transtactions/transtactions.module';
 import { CouponsModule } from './coupons/coupons.module';
+import { UploadImageModule } from './upload-image/upload-image.module';
 
 @Module({
   controllers: [AppController],
@@ -27,6 +28,7 @@ import { CouponsModule } from './coupons/coupons.module';
     ProductsModule,
     TranstactionsModule,
     CouponsModule,
+    UploadImageModule,
   ],
 })
 export class AppModule {}

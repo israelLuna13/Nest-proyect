@@ -4,6 +4,10 @@ export class CreateProductDto {
   @IsNotEmpty({ message: 'The name produc cannot be empty' })
   @IsString({ message: 'Invalid name' })
   name: string;
+
+  @IsNotEmpty({ message: 'The name produc cannot be empty' })
+  image: string;
+
   @IsNotEmpty({ message: 'The  price cannot be empty' })
   @IsNumber({ maxDecimalPlaces: 2 }, { message: 'Invalid price' })
   price: number;

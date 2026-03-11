@@ -7,12 +7,17 @@ import {
   Param,
   Delete,
   Query,
+  UseInterceptors,
+  UploadedFile,
+  BadRequestException,
 } from '@nestjs/common';
 import { ProductsService } from './products.service';
 import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
 import { GetProductsQueryDto } from './dto/get-product.dto';
 import { IdValidationPipe } from '../common/pipes/id-validation/id-validation.pipe';
+import { FileInterceptor } from '@nestjs/platform-express';
+import { UploadImageService } from 'src/upload-image/upload-image.service';
 //url para acceder a productos
 @Controller('products')
 export class ProductsController {
@@ -23,7 +28,10 @@ export class ProductsController {
   // }
   //manera default y mas corta de hacerlo
   //inyeccion de dependencias(service), es como pasarle parametros a la clase
-  constructor(private readonly productsService: ProductsService) {}
+  constructor(
+    private readonly productsService: ProductsService,
+    private readonly uploadImageService: UploadImageService,
+  ) {}
 
   @Post()
   create(@Body() createProductDto: CreateProductDto) {
@@ -56,5 +64,15 @@ export class ProductsController {
   @Delete(':id')
   remove(@Param('id', IdValidationPipe) id: string) {
     return this.productsService.remove(+id);
+  }
+
+  // POST/upload-image -> interceptor request -> extrae el archivo -> lo pasa al controller -> controller lo manda al service -> service lo sube a cloudinary
+  @Post('upload-image')
+  @UseInterceptors(FileInterceptor('file'))
+  UploadImage(@UploadedFile() file: Express.Multer.File) {
+    if (!file) {
+      throw new BadRequestException('The image is required');
+    }
+    return this.uploadImageService.uploadFile(file);
   }
 }
