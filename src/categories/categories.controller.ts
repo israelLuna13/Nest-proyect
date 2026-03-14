@@ -36,8 +36,10 @@ export class CategoriesController {
     )
     id: string,
     @Query('products') products?: string,
+    @Query('key') key?: 'price' | 'name',
+    @Query('order') order?: 'ASC' | 'DESC',
   ) {
-    return this.categoriesService.findOne(+id, products);
+    return this.categoriesService.findOne(+id, products, key, order);
   }
 
   @Patch(':id')

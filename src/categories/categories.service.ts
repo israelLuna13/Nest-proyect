@@ -23,7 +23,15 @@ export class CategoriesService {
   }
 
   //if there are producta params it going to bring the category whit products
-  async findOne(id: number, products?: string) {
+  async findOne(
+    id: number,
+    products?: string,
+    key?: 'price' | 'name',
+    order?: 'ASC' | 'DESC',
+  ) {
+    const orderValue = order === 'ASC' || order === 'DESC' ? order : 'DESC';
+    const sortValue = key === 'price' || key === 'name' ? key : 'name';
+
     const options: FindManyOptions<Category> = {
       where: {
         id,
@@ -37,7 +45,7 @@ export class CategoriesService {
       }),
         (options.order = {
           products: {
-            name: 'DESC',
+            [sortValue]: orderValue,
           },
         }));
     }
