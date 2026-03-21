@@ -4,6 +4,7 @@ import { ValidationPipe } from '@nestjs/common';
 import { NestExpressApplication } from '@nestjs/platform-express';
 import { join } from 'path';
 
+const PORT = process.env.PORT || 300;
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
   //forzar la vsalidacion de dto
@@ -14,6 +15,6 @@ async function bootstrap() {
   );
   //Enabled read public images
   app.useStaticAssets(join(__dirname, '../public'));
-  await app.listen(process.env.PORT ?? 3000);
+  await app.listen(PORT ?? 3000);
 }
 bootstrap();
